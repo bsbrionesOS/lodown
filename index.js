@@ -207,12 +207,14 @@ module.exports.contains = contains;
 module.exports.unique = unique;
 
 /**
- * filter: running the element, index, and array through another function. 
+ * filter: running the element, index, and array through another function. This other function
+ *      will test the element for a certain condition. If this condition is met, the element will get pushed into a new array.
+ *              
  * 
- * @param {Array} array: Am array with elements
+ * @param {Array} array: An array with elements
  * @param {function} fun: a function that tests truthy of a value
  * 
- * @return {array}: This array will contain values that returned true in the fun function
+ * @return {array}: This array will contain all values that returned true in the fun function.
  */
  function filter(array, fun) {
     // setting a container for the new array
@@ -231,7 +233,8 @@ module.exports.unique = unique;
  
 
   /**
- * reject: running the element, index, and array through another function. 
+ * reject: run the element, index, and array through another function. This function will test the elements for a certain condition.
+ *          If the condition in the function is not met. The elements that failed will be pushed into a new array.
  * 
  * @param {Array} array: An array with elements
  * @param {function} fun1: a function that tests falsy of a value
@@ -255,7 +258,10 @@ function reject (array, fun1) {
 module.exports.reject = reject;
 
 /**
- * partition: designed to take all the false and true values in an array and seperate them into there own array
+ * partition: designed to take an array and run the elements within into a function. This function will test a certain condition
+ *             The elements that return true will be pushed into a new array. The elements that return false will also be pushed into a new array.
+ *                  The result will be an array, with the true and falsy elements seperated in there own array.
+ * 
  * 
  * @param {Array} array: array that has truthy and falsy values
  * @param {function} action: function that returns true if values given are true
@@ -286,7 +292,8 @@ module.exports.reject = reject;
 module.exports.partition = partition;
 
 /**
- * map: passing values of collection into another function getting back the retuned value
+ * map: Designed to take either an array or object, The elements within will run through a function. This function will act upon the elements and 
+ *          push the new modified element into a new array.
  * 
  * @param {Array or Object} collection : an array or object which its elements will be used
  * @param {function} fun3 : function that will do something a give back another value
@@ -320,10 +327,11 @@ module.exports.partition = partition;
 module.exports.map = map;
 
 /**
- * pluck: designed to take the value property of an object thats inside an array
+ * pluck: designed to look through an object thats within an array and see if the given property key is in the object.
+ *          If the property key is found, the values of the key will be pushed into a new array.
  * 
  * @param {Array} array: an array with objects that have key value pairs
- * @param {property} property: will be the property that will be plucked into a new array
+ * @param {String} property: This string will be a key that might be in the target object.
  * 
  * @return {Array}: will return an array that has the values of property
  * 
@@ -340,7 +348,11 @@ module.exports.map = map;
  module.exports.pluck = pluck;
  
  /**
-  * every: designed to test the truthy or falsy values of elements within the array or object
+  * every: designed to run elements within an array or object collection into a function. This function will test a certain condition.
+  *         If all the elements within the collection return true, true will be returned. If at least one element returns false from the function
+  *         false will be returned. 
+  *         If the argument of function is missing, the elements within the collection will be tested to see if they are truthy or falsy values.
+  *         If all the elements are truthy, true will be returned. If they are falsy, false will be returned.
   * 
   * @param {Array or Object} collection: an array or object which its values will go through a function to test true or false
   * @param {function} fun: a function that will test its  elements
@@ -350,26 +362,30 @@ module.exports.map = map;
   * 
   */
   function every(collection, fun) {
-    // testing to see if function is not a function or given
+   
     if (typeof(fun) !== 'function') {
-        // using contains with arguments of collection and false
+
       return !contains(collection, false);
    }
     var newArray = [];
     newArray = map(collection, fun);
     console.log(newArray);
     return !contains(newArray, false);
-//     
+   
 }
    module.exports.every = every;
    
 /**
-  * some: designed to test the truthy or falsy values of elements within the array or object
+  * some: designed to pass the elements of an array or object to a function. This function will have a certain condition.
+  *     If at least one element returns true from the function, true will be returned. If all the elements return false, false will be returned.
+  *     
+  *     If there is no argument of function and only the collection is given. The elements within the collection will be tested to see if they are truthy or falsy.
+  *         If theres at least one truthy element, true will be returned. If they are all falsy, false will be returned.
   * 
   * @param {Array or Object} collection: an array or object which its values will go through a function to test true or false
   * @param {function} fun: a function that will test its  elements
   * 
-  * @return {true}: true if one element is true for at least one element 
+  * @return {true}: If at least one element is true
   * @return {false}: if all elements are false
   * 
   * 
@@ -391,7 +407,7 @@ module.exports.map = map;
     * 
     * @param {Array} array: array with contents within to reduce
     * @param {funciton} fun: function to pass elements within the array
-    * @param {seed}: used determine the first position
+    * @param {datatype} seed: used to determine the first position
     * 
     * @return {value} : will be value of previous results + current result
     * 
@@ -426,11 +442,13 @@ module.exports.map = map;
  module.exports.reduce = reduce;  
  
  /**
-  * extend: used to extend an object by
+  * extend: designed to combine mulitple object arguments into one object. The first object will be the object that will be modified.
+  *             If a following object shares a key with the first. The value will be updated. If the following object has a key value pair
+  *                 that the first object doesnt. That key value pair will be added to the object.
   * 
-  * @param {objects}: with values inside
+  * @param {objects}: with key values pairs inside
   * 
-  * @reuturn {object}: extended object
+  * @return {object}: extended object
   * 
   * 
   */
